@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+bandit -r ./ -o security_report.csv -f csv
