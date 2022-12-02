@@ -5,19 +5,19 @@ import astdump
 import logging
 
 def getLoggerObj():
-    logging.basicConfig(filename='FORENSICS.LOG', level=logging.INFO, format='%(asctime)s:::%(name)s:::%(levelname)s:::%(message)s', datefmt='%d-%b-%y %H:%M:%S') 
-    loggerObj = logging.getLogger('project-logger') 
-    return loggerObj 
+    logging.basicConfig(filename='FORENSICS.LOG', level=logging.INFO, format='%(asctime)s:::%(name)s:::%(levelname)s:::%(message)s', datefmt='%d-%b-%y %H:%M:%S')
+    loggerObj = logging.getLogger('project-logger')
+    return loggerObj
 
-def getPythonParseObject( pyFile ): 
-	try:
-		full_tree = ast.parse( open( pyFile ).read())    
-	except Exception:
-		full_tree = ast.parse(constants.EMPTY_STRING) 
-	# print(ast.dump(ast.parse(full_tree)))
+def getPythonParseObject( pyFile ):
+    try:
+        full_tree = ast.parse( open( pyFile ).read())    
+    except Exception:
+        full_tree = ast.parse(constants.EMPTY_STRING) 
+    # print(ast.dump(ast.parse(full_tree)))
     logger = getLoggerObj()
     logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getPythonParseObject', str(full_tree))))
-	return full_tree 
+    return full_tree 
 	
 def getImport(pyTree): 
     import_list = []
