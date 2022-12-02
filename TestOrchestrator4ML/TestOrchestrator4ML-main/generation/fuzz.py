@@ -36,4 +36,34 @@ if __name__ == '__main__':
 	except Exception as exc:
 		print(exc)
 
-	py_parser.getPythonParseObject(py_parser)
+	# code below is used to trigger logging
+	pyTree = py_parser.getPythonParseObject(main)
+	try:
+		py_parser.getImport(pyTree)
+	except Exception as exc:
+		print(exc)
+
+	try:
+		py_parser.getFunctionDetailsForClaases(pyTree)
+	except Exception as exc:
+		print(exc)
+
+	try:
+		py_parser.getFunctionAssignments(class_body)
+	except Exception as exc:
+		print(exc)
+
+	try:
+		py_parser.checkForLibraryImport(pyTree)
+	except Exception as exc:
+		print(exc)
+
+	try:
+		py_parser.checkAlgoNames(func_list)
+	except Exception as exc:
+		print(exc)
+		
+	try:
+		py_parser.getClassificationAlgoNames(pyTree)
+	except Exception as exc:
+		print(exc)
