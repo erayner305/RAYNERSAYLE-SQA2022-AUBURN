@@ -1,0 +1,12 @@
+name: activate-fuzzer
+run-name: ${{ github.actor }} is fuzzing!
+on: [push]
+jobs:
+  check-bats-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - run: python ../../TestOrchestrator4ML/TestOrchestrator4ML-main/generation/fuzz.py
