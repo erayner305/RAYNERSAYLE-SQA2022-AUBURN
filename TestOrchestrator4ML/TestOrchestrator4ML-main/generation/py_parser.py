@@ -2,6 +2,12 @@ import ast
 import os 
 import constants 
 import astdump
+import logging
+
+def getLoggerObj():
+    logging.basicConfig(filename='FORENSICS.LOG', level=logging.INFO, format='%(asctime)s:::%(name)s:::%(levelname)s:::%(message)s', datefmt='%d-%b-%y %H:%M:%S') 
+    loggerObj = logging.getLogger('project-logger') 
+    return loggerObj 
 
 def getPythonParseObject( pyFile ): 
 	try:
@@ -9,6 +15,8 @@ def getPythonParseObject( pyFile ):
 	except Exception:
 		full_tree = ast.parse(constants.EMPTY_STRING) 
 	# print(ast.dump(ast.parse(full_tree)))
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getPythonParseObject', str(full_tree))))
 	return full_tree 
 	
 def getImport(pyTree): 
@@ -24,6 +32,9 @@ def getImport(pyTree):
         			for name in node_.names:
         			    import_list.append( (name.name.split('.')[0] ) )
 #     print("import list: ", import_list)
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getImport', str(pyTree))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getImport', str(import_list))))
     return import_list 
     
 def getFunctionDetailsForClaases(pyTree):
@@ -49,6 +60,9 @@ def getFunctionDetailsForClaases(pyTree):
         	                    func_list_per_class = getFunctionAssignments(class_body)
         	                    for each_list in func_list_per_class:
         	                        func_list.append(each_list)      
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getFunctionDetailsForClasses', str(pyTree))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getFunctionDetailsForClasses', str(func_list))))
     return func_list
         
     
@@ -70,11 +84,17 @@ def getFunctionAssignments(class_body):
                     	func_name_dict  = funcName.__dict__
                     	func_name = func_name_dict[constants.ATTRIB_KW] 
                     	func_list.append(func_name )  
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getFunctionAssignments', str(class_body))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getFunctionAssignments', str(func_list))))
     return func_list
 
         
 def checkForLibraryImport(pyTree):
     import_list = getImport(pyTree)
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'checkForLibraryImport', str(pyTree))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'checkForLibraryImport', str(import_list))))
     if (constants.TENSOR_LIB in import_list or constants.KERAS_LIB in import_list or constants.TORCH_LIB in import_list or constants.SKLEARN_LIB in import_list):
 #         print("import list", import_list)
         return True
@@ -86,6 +106,9 @@ def checkAlgoNames(func_list):
     for item in func_list:
         if item in constants.all_possible_algo:
             algo_list.append(item)
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'checkAlgoNames', str(func_list))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'checkAlgoNames', str(algo_list))))
     return algo_list
     
     
@@ -97,5 +120,8 @@ def getClassificationAlgoNames(pyTree):
         print("pre algo list  ", func_list)  
         algo_list = checkAlgoNames(func_list)
 #     print("algo list  ", algo_list)  
+    logger = getLoggerObj()
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getClassificationAlgoNames', str(pyTree))))
+    logger.debug(logO.debug('{}*{}*{}'.format('py_parser.py', 'getClassificationAlgoNames', str(algo_list))))
     return algo_list
     
